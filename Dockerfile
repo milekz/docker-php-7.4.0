@@ -16,12 +16,16 @@ RUN apt update && \
     mkdir -p /var/www/html && \
     /tmp/php-7.4.0/build/shtool install -c ext/phar/phar.phar /opt/php-7.4/bin && \
     ln -s -f phar.phar /opt/php-7.4/bin/phar && \
-    
-     
+    cp php.ini-production /opt/php-7.4/lib/php.ini && \
+    cp /opt/php-7.4/etc/php-fpm.conf.default /opt/php-7.4/etc/php-fpm.conf && \
+    cp /opt/php-7.4/etc/php-fpm.d/www.conf.default /opt/php-7.4/etc/php-fpm.d/www.conf && \
+    sed -i 's/;pid = run\/php-fpm.pid/pid = run\/php-fpm.pid/g' /opt/php-7.4/etc/php-fpm.conf && \
+    cp /opt/php-7.4/etc/php-fpm.d/www.conf.default /opt/php-7.4/etc/php-fpm.d/www.conf && \
+    apt -y purge build-essential && \
+    apt -y autoremove
+
 
 EXPOSE 9000
-ENTRYPOINT /opt/php-7.4/sbin/php-fpm --nodaemonize
 
-
-
+ENTRYPOINT ["/opt/php-7.4/sbin/php-fpm --nodaemonize"]
 
