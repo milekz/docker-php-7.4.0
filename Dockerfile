@@ -26,4 +26,4 @@ RUN apt update && \
 
 EXPOSE 9000
 
-CMD ["/opt/php-7.4/sbin/php-fpm --nodaemonize"]
+ENTRYPOINT /opt/php-7.4/sbin/php-fpm --nodaemonize
