@@ -21,11 +21,9 @@ RUN apt update && \
     cp /opt/php-7.4/etc/php-fpm.d/www.conf.default /opt/php-7.4/etc/php-fpm.d/www.conf && \
     sed -i 's/;pid = run\/php-fpm.pid/pid = run\/php-fpm.pid/g' /opt/php-7.4/etc/php-fpm.conf && \
     cp /opt/php-7.4/etc/php-fpm.d/www.conf.default /opt/php-7.4/etc/php-fpm.d/www.conf && \
-    apt -y purge build-essential && \
-    apt -y autoremove
-
+    cd / && \
+    rm -rf /tmp/php-7.4.*
 
 EXPOSE 9000
 
-ENTRYPOINT ["/opt/php-7.4/sbin/php-fpm --nodaemonize"]
-
+CMD ["/opt/php-7.4/sbin/php-fpm --nodaemonize"]
